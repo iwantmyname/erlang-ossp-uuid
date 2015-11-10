@@ -124,7 +124,7 @@ NIF(ossp_uuid_nif_make)
   char *buf = NULL;
   size_t len = 0;
 
-  ERL_NIF_TERM result = enif_make_badarg(env);
+  ERL_NIF_TERM result;
 
   if (!enif_get_atom(env, argv[0], version, sizeof(version), ERL_NIF_LATIN1)) {
     return enif_make_badarg(env);
@@ -172,7 +172,12 @@ NIF(ossp_uuid_nif_make)
   (void)memcpy(result_binary.data, buf, result_binary.size);
   result = enif_make_binary(env, &result_binary);
 
+  goto CLEAN;
+
 ERR:
+  result = enif_make_badarg(env);
+
+CLEAN:
   if (buf) {
     free(buf);
   }
@@ -195,7 +200,7 @@ NIF(ossp_uuid_nif_import)
   char *buf = NULL;
   size_t len = 0;
 
-  ERL_NIF_TERM result = enif_make_badarg(env);
+  ERL_NIF_TERM result;
 
   if (!enif_inspect_iolist_as_binary(env, argv[0], &binary)) {
       return enif_make_badarg(env);
@@ -241,7 +246,12 @@ NIF(ossp_uuid_nif_import)
   (void)memcpy(result_binary.data, buf, result_binary.size);
   result = enif_make_binary(env, &result_binary);
 
+  goto CLEAN;
+
 ERR:
+  result = enif_make_badarg(env);
+
+CLEAN:
   if (buf) {
     free(buf);
   }
