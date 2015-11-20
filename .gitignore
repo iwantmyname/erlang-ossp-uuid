@@ -4,3 +4,4 @@ c_src/*.o
 ebin
 .eunit
 doc
+_build
