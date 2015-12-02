@@ -5,3 +5,6 @@ ebin
 .eunit
 doc
 _build
+.erlang.mk
+env.mk
+erlang-ossp-uuid.d
